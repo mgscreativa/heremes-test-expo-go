@@ -8,6 +8,8 @@ import { Text, View } from './Themed';
 import Colors from '@/constants/Colors';
 
 export default function EditScreenInfo({ path }: { path: string }) {
+  const isHermesEnabled = !!global.HermesInternal ? 'true' : 'false';
+
   return (
     <View>
       <View style={styles.getStartedContainer}>
@@ -23,6 +25,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
           darkColor="rgba(255,255,255,0.05)"
           lightColor="rgba(0,0,0,0.05)">
           <MonoText>{path}</MonoText>
+          <MonoText>isHermesEnabled: {isHermesEnabled}</MonoText>
         </View>
 
         <Text
