@@ -10,6 +10,8 @@ import Colors from '@/constants/Colors';
 export default function EditScreenInfo({ path }: { path: string }) {
   const isHermesEnabled = !!global.HermesInternal ? 'true' : 'false';
 
+  console.log('isHermesEnabled', isHermesEnabled);
+
   return (
     <View>
       <View style={styles.getStartedContainer}>
