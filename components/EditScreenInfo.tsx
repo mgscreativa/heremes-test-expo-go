@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, {useState} from 'react';
+import { Pressable, StyleSheet } from 'react-native';
 
 import { ExternalLink } from './ExternalLink';
 import { MonoText } from './StyledText';
@@ -8,9 +8,15 @@ import { Text, View } from './Themed';
 import Colors from '@/constants/Colors';
 
 export default function EditScreenInfo({ path }: { path: string }) {
+  const [timesPressed, setTimesPressed] = useState(0);
   const isHermesEnabled = !!global.HermesInternal ? 'true' : 'false';
 
-  console.log('isHermesEnabled', isHermesEnabled);
+  let textLog = 'Press the button';
+  if (timesPressed) {
+    textLog = timesPressed + 'x onPress';
+  }
+
+  console.log('isHermesEnabled:', isHermesEnabled);
 
   return (
     <View>
@@ -36,6 +42,24 @@ export default function EditScreenInfo({ path }: { path: string }) {
           darkColor="rgba(255,255,255,0.8)">
           Change any of the text, save the file, and your app will automatically update.
         </Text>
+      </View>
+
+      <View>
+        <Pressable
+            onPress={() => {
+              setTimesPressed(current => current + 1);
+            }}
+            style={({pressed}) => [
+              styles.wrapperCustom,
+              {backgroundColor: pressed ? 'rgb(106,123,143)' : 'rgb(27,82,148)',},
+            ]}>
+          {({pressed}) => (
+              <Text style={styles.text}>{pressed ? 'Pressed!' : 'Press Me'}</Text>
+          )}
+        </Pressable>
+        <View style={styles.logBox}>
+          <Text testID="pressable_press_console">{textLog}</Text>
+        </View>
       </View>
 
       <View style={styles.helpContainer}>
@@ -78,5 +102,21 @@ const styles = StyleSheet.create({
   },
   helpLinkText: {
     textAlign: 'center',
+  },
+  text: {
+    fontSize: 16,
+    color: '#fff',
+  },
+  wrapperCustom: {
+    borderRadius: 8,
+    padding: 6,
+  },
+  logBox: {
+    color: '#000',
+    padding: 20,
+    margin: 10,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#f0f0f0',
+    backgroundColor: '#f9f9f9',
   },
 });
